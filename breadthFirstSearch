@@ -1,0 +1,41 @@
+class Peoples {
+    var name: String
+    var isChecked: Bool
+    var neighbors: [Peoples]
+    
+    init(currentName: String, neighbors: [Peoples]) {
+        self.name = currentName
+        self.neighbors = neighbors
+        self.isChecked = false
+    }
+}
+let Anudge = Peoples(currentName: "Anudge", neighbors: [])
+let Peggi = Peoples(currentName: "Peggi", neighbors: [])
+let Tom = Peoples(currentName: "Tomi", neighbors: [])
+let Djonym = Peoples(currentName: "Djony", neighbors: [])
+let Clare = Peoples(currentName: "Clare", neighbors: [Tom, Djonym])
+let Bob = Peoples(currentName: "Bob", neighbors: [Anudge, Peggi])
+let Alice = Peoples(currentName: "Alice", neighbors: [Peggi])
+let you = Peoples(currentName: "You", neighbors: [Alice, Bob, Clare])
+
+var globalQueue : [Peoples] = [you]
+
+func checkForMangoSeller(queue: [Peoples]) -> String? {
+    if !globalQueue.isEmpty {
+        if queue[0].isChecked == false {
+            queue[0].isChecked = true
+            if queue[0].name.hasSuffix("m") {
+                return queue[0].name
+            } else {
+                globalQueue += queue[0].neighbors
+                globalQueue.remove(at: 0)
+                return checkForMangoSeller(queue: globalQueue)
+            }
+        } else {
+            globalQueue.remove(at: 0)
+            return checkForMangoSeller(queue: globalQueue)
+        }
+    }
+    return "Empty ("
+}
+print(checkForMangoSeller(queue: globalQueue))
