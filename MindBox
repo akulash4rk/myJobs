@@ -54,7 +54,7 @@ func checkType(pickedFunc: Int){
         }
     }
     if pickedFunc == 2{
-        if data.count == 1 {
+        if data.count == 1 { //вижу, что проверка на количество чисел была только что, по-хорошему надо бы исправить, надеюсь, это не критично
             print(findCircleSpace(radius: data))
         }
         else {
@@ -103,7 +103,7 @@ choiceMenu()
 func isContinum(){ //Может повторяться несколкьо раз
     print("Хотите продолжить? Y/N")
     var choice : String = ""
-    while ((choice != "Y") || (choice != "N")){
+    while ((choice != "Y") || (choice != "N")){ // Цикл выполнился несколько раз в одной компиляции, не уверен, почему. Повторно не удалось несколько раз вызвать цикл
         choice = readLine() ?? ""
         switch choice {
         case "Y" :
