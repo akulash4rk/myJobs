@@ -1,0 +1,49 @@
+var key: Int
+var startArray = [5, 3, 7, 8, 4, 2]
+func quickSort(currentArray: [Int]) -> [Int] {
+    if currentArray.isEmpty {
+        return []
+    }
+    var support = currentArray[0]
+    var lessArray: [Int] = []
+    var moreArray: [Int] = []
+    if currentArray.count <= 1 {
+        return currentArray
+    }
+    for i in 1..<currentArray.count {
+        if currentArray[i] <= support {
+            lessArray.append(currentArray[i])
+        } else {
+            moreArray.append(currentArray[i])
+        }
+    }
+    return quickSort(currentArray: lessArray) + [support] + quickSort(currentArray: moreArray)
+}
+print(quickSort(currentArray: startArray))
+
+var key : Int
+var startArray = [5, 3, 7, 8, 4, 2]
+func quickSort(currentArray: [Int]) -> [Int] {
+print(currentArray)
+    if currentArray.count < 1 {
+        return []
+    }
+        if currentArray.count == 1 {
+        return currentArray
+    }
+    let support = currentArray[0]
+    var lessArray : [Int] = []
+    var moreArray : [Int] = []
+    for i in 1..<currentArray.count{
+        if (currentArray[i] <= support) {
+        lessArray.append(currentArray[i])
+        }
+        else {
+            moreArray.append(currentArray[i])
+        }
+    }
+    print(lessArray, " ", moreArray)
+   return quickSort(currentArray : lessArray) + [support] + quickSort(currentArray : moreArray)
+}
+
+print(quickSort(currentArray : startArray))
