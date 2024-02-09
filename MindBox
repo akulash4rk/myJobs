@@ -1,0 +1,118 @@
+import Foundation
+var savedResults: [Float] = []
+func showMenu() {
+    print("1. Найти площадь неизвестной фигуры")
+    print("2. Найти площадь круга")
+    print("3. Найти площадь треугольника")
+    print("4. Просмотреть последние площади")
+    print("5. Выйти")
+}
+func choiceMenu() {
+    let choice = readLine() ?? ""
+    switch choice {
+    case "1":
+        checkType(pickedFunc: 1)
+    case "2":
+        checkType(pickedFunc: 2)
+    case "3":
+        checkType(pickedFunc: 3)
+    case "4":
+        if savedResults.isEmpty == true {
+            print("Вы еще не находили площади")
+        } else {
+            print("Ваши последние результаты: ", savedResults)
+        }
+        isContinum()
+    case "5":
+        return
+    default:
+        print("Неверный номер, повторите попытку")
+        choiceMenu()
+    }
+}
+
+func checkType(pickedFunc: Int){
+    print("Введите данные.")
+    let arrayInput = readLine() ?? ""
+    let data = arrayInput.split(separator: " ").compactMap{ Float($0) }
+    for i in 0..<data.count{
+        if data[i] < 0 {
+            print("Ошибка. Отрицательное чилсо.")
+            checkType(pickedFunc: pickedFunc)
+        }
+    }
+    if pickedFunc == 1 {
+        switch data.count {
+        case 1:
+            print(findCircleSpace(radius: data))
+            
+        case 3:
+            print(findTriangleSpace(side: data))
+        default:
+            print("Ошибка. Неправильное количество данных или их тип.")
+            checkType(pickedFunc: pickedFunc)
+        }
+    }
+    if pickedFunc == 2{
+        if data.count == 1 {
+            print(findCircleSpace(radius: data))
+        }
+        else {
+            print("Ошибка. Неправильное количество данных или их тип.")
+            checkType(pickedFunc: pickedFunc)
+        }
+    }
+    if pickedFunc == 3{
+        if data.count == 3 {
+            print(findTriangleSpace(side: data))
+        }
+        else {
+            print("Ошибка. Неправильное количество данных или их тип.")
+            checkType(pickedFunc: pickedFunc)
+        }
+    }
+    isContinum()
+}
+
+func addToMyAsk(lastSpace: Float) -> [Float] { //save last area
+    savedResults.append(lastSpace)
+    return savedResults
+}
+
+
+func findCircleSpace(radius : [Float]) -> Float { //Finding Circle Space
+    let currentCircleSpace = pow(radius[0], 2) * Float.pi
+    addToMyAsk(lastSpace: currentCircleSpace)
+    return currentCircleSpace
+}
+
+
+
+func findTriangleSpace(side : [Float]) -> Float { //Finding Triangle Space
+    if pow(side[0], 2) == pow(side[1], 2) + pow(side[2], 2) || pow(side[1], 2) == pow(side[2], 2) + pow(side[0], 2) || pow(side[2], 2) == pow(side[0], 2) + pow(side[1], 2) {
+        print("Треугольник \(side[0]) \(side[1]) \(side[2]) прямоугольный.")
+    }  // Checking for 90 corner
+    let halfPerimeter = (side[0] + side[1] + side[2]) / 2
+    let currentTriangleSpace = sqrt(halfPerimeter * (halfPerimeter - side[0]) * (halfPerimeter - side[1]) * (halfPerimeter - side[2]))
+    addToMyAsk(lastSpace: currentTriangleSpace)
+    return currentTriangleSpace
+}
+showMenu()
+choiceMenu()
+
+func isContinum(){ //Может повторяться несколкьо раз
+    print("Хотите продолжить? Y/N")
+    var choice : String = ""
+    while ((choice != "Y") || (choice != "N")){
+        choice = readLine() ?? ""
+        switch choice {
+        case "Y" :
+            showMenu()
+            choiceMenu()
+        case "N" :
+            return
+        default:
+            print("Ошибка ввода. Введите Y/N")
+        }
+    }
+}
