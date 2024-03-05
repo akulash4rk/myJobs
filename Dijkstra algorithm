@@ -1,0 +1,53 @@
+class Matrix {
+    var isChecked: Bool
+    var ways: [Int]
+    
+    init(ways: [Int]) {
+        self.ways = ways
+        isChecked = false
+    }
+}
+var matrix = [
+    Matrix(ways: [9999, 10, 9999, 5, 9999]),
+    Matrix(ways: [9999, 9999, 1, 2, 9999]),
+    Matrix(ways: [9999, 9999, 9999, 9999, 4]),
+    Matrix(ways: [9999, 3, 9, 0, 2]),
+    Matrix(ways: [7, 9999, 6, 9999, 9999])
+]
+var currentMinWays = [0, 9999, 9999, 9999, 9999] 
+var counter = 0
+
+
+func findingMin(currentPoint: Int, previousMin: Int)-> Int{
+    var minLocal = 9999
+    var localWay : Int = 9999
+    matrix[currentPoint].isChecked = true
+
+    
+    
+//update min array
+    for i in 0...matrix[0].ways.count-1{
+    if ((matrix[currentPoint].ways[i]+previousMin <= currentMinWays[i]) && (matrix[currentPoint].ways[i] != 0) && matrix[i].isChecked == false){
+    currentMinWays[i] = matrix[currentPoint].ways[i] + previousMin
+    }
+    }
+  
+
+
+    //finding min in array
+    for i in 0...currentMinWays.count-1{
+    if (minLocal>currentMinWays[i] && matrix[i].isChecked == false){
+        minLocal = currentMinWays[i]
+        localWay = i
+    }
+    }
+    
+    
+
+if minLocal != 9999{
+findingMin(currentPoint:localWay, previousMin: minLocal)
+}
+return 0
+}
+findingMin(currentPoint: 0, previousMin:0)
+print(currentMinWays)
